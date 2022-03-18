@@ -6,13 +6,13 @@ import { Link } from 'react-router-dom';
 export default function Read() {
     const [APIData, setAPIData] = useState([]);
     useEffect(() => {
-        axios.get(`http://10.194.2.142:2087/api/v1/metaverse/ticket`)
+        axios.get(`http://10.194.2.113:2087/api/v1/metaverse/ticket`)
             .then((response) => {
-                console.log(response.data)
-                 setAPIData(response.data);
+                console.log(response.data.data)
+                 setAPIData(response.data.data);
             })
     }, []);
-console.log(APIData)
+  console.log(APIData)
     const setData = (data) => {
         let { id, eventId, nftId, createdAt } = data;
         localStorage.setItem('ID', id);
@@ -22,20 +22,20 @@ console.log(APIData)
     }
 
     const getData = () => {
-        axios.get(`https://623241cd6f4ffe00fb85929b.mockapi.io/posts`)
+        axios.get(`http://10.194.2.113:2087/api/v1/metaverse/ticket`)
             .then((getData) => {
-                setAPIData(getData.data);
+                setAPIData(getData.data.data);
             })
     }
-    console.log(APIData)
+  //  console.log(APIData)
 
     const onDelete = (id) => {
-        axios.delete(`https://623241cd6f4ffe00fb85929b.mockapi.io/posts/${id}` 
-        // ,{
-        //     headers: {
-        //         Authorization : 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7Il9pZCI6IjYyMDNkZWIyOGQ4NGE5NDBmNDgzMGMyMyIsImFkZHJlc3MiOiIweDlhZEMyZUFEZTAxZUFDODdkMDVhMTY1ODkwZDY0MjQ5NTRFMGZjMjIiLCJzdGF0dXMiOmZhbHNlfSwiaWF0IjoxNjQ2MjQyNDA5LCJleHAiOjE2NDY4NDcyMDl9.LmYnNvgMrw5YXMyuTNYNNH-7aMRIFBpbKuE7fr-vdbU'
-        //     }
-        // }
+        axios.delete(`http://10.194.2.113:2087/api/v1/metaverse/ticket/${id}` 
+        ,{
+            headers: {
+                Authorization : 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7Il9pZCI6IjYyMDNkZWIyOGQ4NGE5NDBmNDgzMGMyMyIsImFkZHJlc3MiOiIweDlhZEMyZUFEZTAxZUFDODdkMDVhMTY1ODkwZDY0MjQ5NTRFMGZjMjIiLCJzdGF0dXMiOmZhbHNlfSwiaWF0IjoxNjQ2MjQyNDA5LCJleHAiOjE2NDY4NDcyMDl9.LmYnNvgMrw5YXMyuTNYNNH-7aMRIFBpbKuE7fr-vdbU'
+            }
+        }
         )
         .then(() => {
             getData();
@@ -61,13 +61,13 @@ console.log(APIData)
                 </Table.Header>
 
                 <Table.Body>
-                    {APIData.map((d , ind) => {
+                    {APIData.map((d) => {
                         return (
-                            <Table.Row key={ind}>
+                            <Table.Row >
                                 
                                 <Table.Cell>{d.id}</Table.Cell>
                                 <Table.Cell>{d.eventId}</Table.Cell>
-                                <Table.Cell>{d.nftId}</Table.Cell>
+                                <Table.Cell>{d.nftId.id}</Table.Cell>
                                 <Table.Cell>{d.createdAt}</Table.Cell>
                                 <Link to='/update'>
                                     <Table.Cell> 

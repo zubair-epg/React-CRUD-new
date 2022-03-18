@@ -7,27 +7,25 @@ export default function Create() {
     let history = useHistory();
     const [nftId, setNftId] = useState();
    const [eventId, setEventId] = useState();
+   const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7Il9pZCI6IjYyMDNkZWIyOGQ4NGE5NDBmNDgzMGMyMyIsImFkZHJlc3MiOiIweDlhZGMyZWFkZTAxZWFjODdkMDVhMTY1ODkwZDY0MjQ5NTRlMGZjMjIiLCJzdGF0dXMiOmZhbHNlfSwiaWF0IjoxNjQ3NjI2NDAyLCJleHAiOjE2NDgyMzEyMDJ9.VM72QD2nEPmJ-LiFSfEaIIveOyP2aOoG5zpUULSc19k'
  
     const postData = () => {
-        axios.post(`http://10.194.2.118:2087/api/v1/metaverse/ticket`, {
-            body :{"nftId":
-                nftId,
-                "eventId":
-                eventId
-               },
-            headers : {
-                Authorization : 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7Il9pZCI6IjYyMDNkZWIyOGQ4NGE5NDBmNDgzMGMyMyIsImFkZHJlc3MiOiIweDlhZEMyZUFEZTAxZUFDODdkMDVhMTY1ODkwZDY0MjQ5NTRFMGZjMjIiLCJzdGF0dXMiOmZhbHNlfSwiaWF0IjoxNjQ2MjQyNDA5LCJleHAiOjE2NDY4NDcyMDl9.LmYnNvgMrw5YXMyuTNYNNH-7aMRIFBpbKuE7fr-vdbU',
-                Accept: 'application/json, text/plain, */*',
-                'Content-Length': '43',
-                'Content-Type': 'application/json;charset=utf-8',
-                Host: 'httpbin.org',
-                'User-Agent': 'axios/0.21.1',
-            },
+        axios.post(`http://10.194.2.113:2087/api/v1/metaverse/ticket`,{"nftId":
+        nftId,
+        "eventId":
+        eventId
+       },
+           { headers : {
+                Authorization:`Bearer ${token}`
+            }
+        }
+            
            
-        }).then(() => {
+        ).then(() => {
             history.push('/')
         })
     }
+ 
     return (
         <div>
             <Form className="create-form">
