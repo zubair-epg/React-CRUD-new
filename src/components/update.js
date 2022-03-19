@@ -3,13 +3,12 @@ import { Button, Form , Dropdown} from "semantic-ui-react";
 import axios from "axios";
 import { useHistory } from "react-router";
 
-
 export default function Update() {
   let history = useHistory();
   // const [id, setID] = useState(null);
   const [nftId, setNftId] = useState([]);
    const [eventId, setEventId] = useState([]);
-
+   
    const nftIdApi = () => {
     axios
       .get(`http://10.194.2.113:2087/admin/nft/select`, {
@@ -51,10 +50,6 @@ export default function Update() {
    console.log(nftOptions);
   const nftOptionId = nftId.map(d => ({value:d.id}))
   var nftIdVal = nftOptionId.filter(singleOptions => (singleOptions.nftOptions));
-
-
-
-
   const friendOptions = [
     {
       key: 'Jenny Hess',
@@ -101,7 +96,7 @@ export default function Update() {
   const NftOptionSelection = () => (
     <Dropdown
     id="subjectName"
-      placeholder='Select Friend'
+      placeholder='Select Nft Id'
       fluid
       selection
       options={nftOptions}
@@ -114,7 +109,7 @@ export default function Update() {
       fluid
       selection
       options={friendOptions}
-      onAddItem={(e) => console.log(e.target.SelectedIndex)}
+      onAddItem={selectedNftId}
     />
   )
 
@@ -137,7 +132,6 @@ export default function Update() {
           /> */}
         <NftOptionSelection />
 
-    
         </Form.Field>
         <Form.Field>
         
