@@ -9,11 +9,9 @@ export default function Read() {
     axios
       .get(`http://10.194.2.113:2087/api/v1/metaverse/ticket`)
       .then((response) => {
-        console.log(response.data.data);
         setAPIData(response.data.data);
       });
   }, []);
-  console.log(APIData);
   const setData = (data) => {
     let { id, eventId, nftId, createdAt } = data;
     localStorage.setItem("ID", id);
@@ -29,7 +27,6 @@ export default function Read() {
         setAPIData(getData.data.data);
       });
   };
-  //  console.log(APIData)
 
   const onDelete = (id) => {
     axios
