@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Button, Form, Dropdown } from "semantic-ui-react";
 import axios from "axios";
+import 'dotenv/config'
 import { useHistory } from "react-router";
 
 export default function Create() {
@@ -19,13 +20,11 @@ export default function Create() {
     console.log("useeffect rendered")
   }, []);
 
-  const token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7Il9pZCI6IjYyMDNkZWIyOGQ4NGE5NDBmNDgzMGMyMyIsImFkZHJlc3MiOiIweDlhZGMyZWFkZTAxZWFjODdkMDVhMTY1ODkwZDY0MjQ5NTRlMGZjMjIiLCJzdGF0dXMiOmZhbHNlfSwiaWF0IjoxNjQ3NjI2NDAyLCJleHAiOjE2NDgyMzEyMDJ9.VM72QD2nEPmJ-LiFSfEaIIveOyP2aOoG5zpUULSc19k";
   const nftIdApi = () => {
     axios
-      .get(`http://10.194.2.113:2087/admin/nft/select`, {
+      .get(process.env.REACT_APP_NFT_GET_API, {
         headers: {
-          Authorization: `${token}`,
+          Authorization: process.env.REACT_APP_BEARER_TOKEN,
         },
       })
       .then((response) => setNftId(response.data.data));
@@ -33,9 +32,9 @@ export default function Create() {
 
   const eventIdApi = () => {
     axios
-      .get(`http://10.194.2.113:2087/api/v1/metaverse/event`, {
+      .get(process.env.REACT_APP_EVENT_GET_API, {
         headers: {
-          Authorization: `${token}`,
+          Authorization: process.env.REACT_APP_BEARER_TOKEN,
         },
       })
       .then((response) => setEventId(response.data.data));
@@ -43,8 +42,8 @@ export default function Create() {
 
  
 
-  const nftOptions = nftId.map((d , ind) => ({ text: d.text, value: d.id }));
-  const eventOptions = eventId.map((d , ind) => ({ text: d.name, value: d._id }));
+  const nftOptions = nftId.map((d , ind) => ({key:ind, text: d.text, value: d.id }));
+  const eventOptions = eventId.map((d , ind1) => ({key:ind1, text: d.name, value: d._id }));
 
   const EventOptionSelection = () => (
     <Dropdown
@@ -52,7 +51,7 @@ export default function Create() {
       fluid
       search
       selection
-      
+      key={eventOptions.key}
       options={eventOptions}
       onChange={eventDropDownSelect}
     />
@@ -79,18 +78,14 @@ export default function Create() {
     setEventIdVal(data.value);
    
   };
-//   console.log(nftId);
-//   console.log(eventId);
-//   console.log(nftIdVal);
-//   console.log(eventIdVal);
+
   const postData = () => {
     axios
-      .post(
-        `http://10.194.2.113:2087/api/v1/metaverse/ticket`,
+      .post(process.env.REACT_APP_TICKET_API,
         { nftId: nftIdVal, eventId: eventIdVal },
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            Authorization: process.env.REACT_APP_BEARER_TOKEN,
           },
         }
       )

@@ -2,12 +2,13 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Table, Button } from "semantic-ui-react";
 import { Link } from "react-router-dom";
+import 'dotenv/config'
 
 export default function Read() {
   const [APIData, setAPIData] = useState([]);
   useEffect(() => {
     axios
-      .get(`http://10.194.2.113:2087/api/v1/metaverse/ticket`)
+      .get(process.env.REACT_APP_TICKET_API)
       .then((response) => {
         setAPIData(response.data.data);
       });
@@ -22,7 +23,7 @@ export default function Read() {
 
   const getData = () => {
     axios
-      .get(`http://10.194.2.113:2087/api/v1/metaverse/ticket`)
+      .get(process.env.REACT_APP_TICKET_API)
       .then((getData) => {
         setAPIData(getData.data.data);
       });
@@ -30,10 +31,9 @@ export default function Read() {
 
   const onDelete = (id) => {
     axios
-      .delete(`http://10.194.2.113:2087/api/v1/metaverse/ticket/${id}`, {
+      .delete(`${process.env.REACT_APP_TICKET_API}/${id}`, {
         headers: {
-          Authorization:
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7Il9pZCI6IjYyMDNkZWIyOGQ4NGE5NDBmNDgzMGMyMyIsImFkZHJlc3MiOiIweDlhZEMyZUFEZTAxZUFDODdkMDVhMTY1ODkwZDY0MjQ5NTRFMGZjMjIiLCJzdGF0dXMiOmZhbHNlfSwiaWF0IjoxNjQ2MjQyNDA5LCJleHAiOjE2NDY4NDcyMDl9.LmYnNvgMrw5YXMyuTNYNNH-7aMRIFBpbKuE7fr-vdbU",
+          Authorization:process.env.REACT_APP_BEARER_TOKEN
         },
       })
       .then(() => {

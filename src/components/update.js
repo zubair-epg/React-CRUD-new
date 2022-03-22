@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Button, Form, Dropdown } from "semantic-ui-react";
+import 'dotenv/config'
 import axios from "axios";
 import { useHistory } from "react-router";
 
@@ -11,30 +12,28 @@ export default function Update() {
   const [nftId, setNftId] = useState([]);
   const [eventId, setEventId] = useState([]);
   const ticketId = localStorage.getItem("ID");
-  console.log(ticketId);
   useEffect(() => {
     nftIdApi();
     eventIdApi();
     console.log("useeffect rendered");
   }, []);
 
-  const token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwYXlsb2FkIjp7Il9pZCI6IjYyMDNkZWIyOGQ4NGE5NDBmNDgzMGMyMyIsImFkZHJlc3MiOiIweDlhZGMyZWFkZTAxZWFjODdkMDVhMTY1ODkwZDY0MjQ5NTRlMGZjMjIiLCJzdGF0dXMiOmZhbHNlfSwiaWF0IjoxNjQ3NjI2NDAyLCJleHAiOjE2NDgyMzEyMDJ9.VM72QD2nEPmJ-LiFSfEaIIveOyP2aOoG5zpUULSc19k";
+ 
   const nftIdApi = () => {
     axios
-      .get(`http://10.194.2.113:2087/admin/nft/select`, {
+      .get(process.env.REACT_APP_NFT_GET_API, {
         headers: {
-          Authorization: `${token}`,
-        },
+          Authorization: process.env.REACT_APP_BEARER_TOKEN,
+        }
       })
       .then((response) => setNftId(response.data.data));
   };
 
   const eventIdApi = () => {
     axios
-      .get(`http://10.194.2.113:2087/api/v1/metaverse/event`, {
+      .get(process.env.REACT_APP_EVENT_GET_API, {
         headers: {
-          Authorization: `${token}`,
+          Authorization: process.env.REACT_APP_BEARER_TOKEN,
         },
       })
       .then((response) => setEventId(response.data.data));
@@ -68,22 +67,22 @@ export default function Update() {
       onChange={eventDropDownSelect}
     />
   );
-  console.log(nftIdVal);
-  console.log(eventIdVal);
+
+
   const updateAPIData = () => {
-    console.log("hitted");
+
     axios
       .put(
-        `http://10.194.2.113:2087/api/v1/metaverse/ticket/${ticketId}`,
+        `${process.env.REACT_APP_TICKET_API}/${ticketId}`,
         { nftId: nftIdVal, eventId: eventIdVal },
         {
           headers: {
-            Authorization: `${token}`,
+            Authorization: process.env.REACT_APP_BEARER_TOKEN,
           },
         }
       )
       .then((response) => {
-        console.log(response);
+  
         alert("updated successfully")
         setTimeout(()=>{
           history.replace('/')
